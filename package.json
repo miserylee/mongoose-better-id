@@ -1,0 +1,29 @@
+{
+  "name": "mongoose-better-id",
+  "version": "0.1.0",
+  "description": "A plugin for mongoose to generator better id",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./Example"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miserylee/mongoose-better-id.git"
+  },
+  "keywords": [
+    "mongoose",
+    "id",
+    "autoincrement",
+    "plugin"
+  ],
+  "author": "Misery Lee <miserylee@foxmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/miserylee/mongoose-better-id/issues"
+  },
+  "homepage": "https://github.com/miserylee/mongoose-better-id#readme",
+  "dependencies": {
+    "mongoose": "^4.6.4",
+    "tlan": "^0.1.2"
+  }
+}
