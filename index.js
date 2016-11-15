@@ -128,7 +128,7 @@ module.exports = function (schema, {
 
   schema.pre('save', function (next) {
     const doc = this;
-    if (doc.isNew) {
+    if (doc.isNew && !doc[field]) {
       IdCounterModel({
         model: doc.constructor.modelName,
         field
@@ -141,5 +141,22 @@ module.exports = function (schema, {
       });
     } else next();
   });
+
+  schema.statics.genId = function (cb = _ => _) {
+    return new Promise((resolve, reject) => {
+      IdCounterModel({
+        model: this.modelName,
+        field
+      }).nextCount((err, count) => {
+        if(err) {
+          cb(err);
+          return reject(err);
+        }
+        const id = `${prefix}${timestamp.enable ? new Date().format(timestamp.format) : ''}${pad(count)}`;
+        cb(null, id);
+        return resolve(id);
+      });
+    });
+  }
 
 };

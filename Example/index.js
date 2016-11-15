@@ -36,6 +36,7 @@ for (let i = 0; i < 100; i++) {
 }
 for (let i = 0; i < 100; i++) {
   Person({
+    _id: new mongoose.Types.ObjectId,
     name: 'Misery',
     gender: 'male'
   }).save(console.log);
