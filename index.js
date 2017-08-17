@@ -122,7 +122,7 @@ module.exports = function (schema, {
     require: true
   };
   if (field !== '_id') {
-    fields[settings.field].unique = true;
+    fields[field].unique = true;
   }
   schema.add(fields);
 
