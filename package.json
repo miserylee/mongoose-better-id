@@ -1,6 +1,6 @@
 {
   "name": "mongoose-better-id",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A plugin for mongoose to generator better id",
   "main": "index.js",
   "scripts": {
