@@ -1,6 +1,6 @@
 {
   "name": "mongoose-better-id",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A plugin for mongoose to generator better id",
   "main": "index.js",
   "scripts": {
@@ -24,6 +24,6 @@
   "homepage": "https://github.com/miserylee/mongoose-better-id#readme",
   "dependencies": {
     "mongoose": "^4.6.4",
-    "tlan": "^0.1.6"
+    "tlan": "^0.3.0"
   }
 }
