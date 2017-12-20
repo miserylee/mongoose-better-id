@@ -22,7 +22,7 @@ schema.plugin(betterId, {
   },
   timestamp: {
     enable: true,
-    format: 'yyMMddhhmmssS'
+    format: 'YYMMDDhhmmssS'
   }
 });
 

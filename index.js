@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const tlan = require('tlan');
+const moment = require('moment');
 
 module.exports = function (schema, {
   connection,
@@ -21,7 +21,7 @@ module.exports = function (schema, {
 
   timestamp = Object.assign({
     enable: true,
-    format: 'yyMMddhhmm'
+    format: 'YYMMDDhhmm'
   }, timestamp);
 
   let IdCounterModel;
@@ -36,7 +36,7 @@ module.exports = function (schema, {
         field: { type: String, required: true },
         count: { type: Number, default: suffix.start, min: suffix.start, max: suffix.max }
       });
-      counterSchema.index({ field: 1, model: 1 }, { unique: true, required: true, index: -1 });
+      counterSchema.index({ field: 1, model: 1 }, { unique: true });
 
       counterSchema.methods.fetch = function (cb) {
         const doc = this;
@@ -135,7 +135,7 @@ module.exports = function (schema, {
       }).nextCount(function (err, count) {
         if (err) return next(err);
         else {
-          doc[field] = `${prefix}${timestamp.enable ? new Date().format(timestamp.format) : ''}${pad(count)}`;
+          doc[field] = `${prefix}${timestamp.enable ? moment().format(timestamp.format) : ''}${pad(count)}`;
           next();
         }
       });
@@ -152,7 +152,7 @@ module.exports = function (schema, {
           cb(err);
           return reject(err);
         }
-        const id = `${prefix}${timestamp.enable ? new Date().format(timestamp.format) : ''}${pad(count)}`;
+        const id = `${prefix}${timestamp.enable ? moment().format(timestamp.format) : ''}${pad(count)}`;
         cb(null, id);
         return resolve(id);
       });
