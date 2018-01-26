@@ -21,7 +21,7 @@ module.exports = function (schema, {
 
   timestamp = Object.assign({
     enable: true,
-    format: 'YYMMDDhhmm'
+    format: 'YYMMDDHHmm'
   }, timestamp);
 
   let IdCounterModel;
