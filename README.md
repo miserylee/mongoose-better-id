@@ -1,10 +1,10 @@
 ## mongoose-better-id ![NPM version](https://img.shields.io/npm/v/mongoose-better-id.svg?style=flat)
 
-A plugin for mongoose to generator better id
+Mongoose plugin for auto-generate better-read _id
 
 ### Installation
 ```bash
-$ npm install mongoose-better-id --save
+$ yarn mongoose-better-id
 ```
 
 ### Example
