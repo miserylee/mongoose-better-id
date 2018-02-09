@@ -4,7 +4,7 @@ Mongoose plugin for auto-generate better-read _id
 
 ### Installation
 ```bash
-$ yarn mongoose-better-id
+$ yarn add mongoose-better-id
 ```
 
 ### Example
