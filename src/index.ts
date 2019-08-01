@@ -147,7 +147,7 @@ const mongooseBetterId = (schema: Schema, {
     }
   });
 
-  schema.statics.genId = function(cb = (err: Error | null, id?: string) => null) {
+  schema.statics.genId = function(cb: (err: Error | null, id?: string) => void = err => undefined) {
     return new Promise((resolve, reject) => {
       new IdCounterModel({
         srcModel: this.modelName,
