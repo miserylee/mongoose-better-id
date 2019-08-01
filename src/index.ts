@@ -7,6 +7,7 @@ const mongooseBetterId = (schema: Schema, {
   prefix = '',
   suffix = {},
   timestamp = {},
+  modelName = '_id_counter',
 }: {
   connection?: Connection;
   field?: string;
@@ -17,6 +18,7 @@ const mongooseBetterId = (schema: Schema, {
     max?: number;
   };
   timestamp?: {};
+  modelName?: string;
 } = {}) => {
   if (!connection) {
     throw new Error('connection is required!');
@@ -59,13 +61,13 @@ const mongooseBetterId = (schema: Schema, {
   let counterSchema: Schema;
 
   try {
-    IdCounterModel = connection.model('IdCounter');
+    IdCounterModel = connection.model(modelName);
   } catch (err) {
     if (err.name === 'MissingSchemaError') {
       counterSchema = new Schema({
         srcModel: { type: String, required: true },
         field: { type: String, required: true },
-        count: { type: Number, default: mixedSuffix.start, min: suffix.start, max: suffix.max },
+        count: { type: Number, default: mixedSuffix.start, min: mixedSuffix.start, max: mixedSuffix.max },
       });
       counterSchema.index({ field: 1, srcModel: 1 }, { unique: true });
       counterSchema.methods.fetch = async function(this: IIdCounterDocument): Promise<IIdCounterDocument> {
@@ -86,7 +88,7 @@ const mongooseBetterId = (schema: Schema, {
           const nextCounter = await this.constructor.findOneAndUpdate({
             model: this.model,
             field: this.field,
-            count: { $gt: suffix.max },
+            count: { $gt: mixedSuffix.max },
           }, {
             $set: {
               count: mixedSuffix.start,
@@ -113,7 +115,7 @@ const mongooseBetterId = (schema: Schema, {
         }
       };
 
-      IdCounterModel = connection.model('IdCounter', counterSchema);
+      IdCounterModel = connection.model(modelName, counterSchema);
     } else {
       throw err;
     }
@@ -131,10 +133,10 @@ const mongooseBetterId = (schema: Schema, {
 
   schema.add(fields);
 
-  schema.pre('validate', function(this: Document & { constructor: Model<Document>, [prop: string]: any }, next) {
+  schema.pre('validate', function(this: Document & { [prop: string]: any }, next) {
     if (this.isNew && !this[field]) {
       new IdCounterModel({
-        srcModel: this.constructor.modelName,
+        srcModel: (this.constructor as any).modelName,
         field,
       }).nextCount().then(count => {
         this[field] = `${prefix}${mixedTimestamp.enable ? moment().format(mixedTimestamp.format) : ''}${pad(count)}`;

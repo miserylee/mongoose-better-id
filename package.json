@@ -35,6 +35,6 @@
   },
   "dependencies": {
     "moment": "^2.20.1",
-    "mongoose": "^5.1.2"
+    "mongoose": "^5.3.13"
   }
 }

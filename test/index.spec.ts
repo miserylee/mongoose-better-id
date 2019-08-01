@@ -20,7 +20,7 @@ schema.plugin(betterId, {
   },
   timestamp: {
     enable: true,
-    format: 'YYMMDDHHmmssS',
+    format: 'YYMMDDHHmmssSSS',
   },
 });
 
@@ -39,7 +39,19 @@ describe('BetterId', () => {
 
     assert(person);
     console.log(person);
-    assert(/^person[0-9]{16}$/.test(person!._id));
+    assert(/^person[0-9]{18}$/.test(person!._id));
+  });
+});
+
+describe('Concurrency', function() {
+  this.timeout(10000);
+  it('should be ok', async () => {
+    for (let i = 0; i < 1001; i++) {
+      await Person.create({
+        name: 'Misery',
+        gender: 'male',
+      });
+    }
   });
 });
 
